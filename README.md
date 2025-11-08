@@ -3,7 +3,6 @@
 A classic **Tic Tac Toe** game built with **HTML, CSS, JavaScript**, and enhanced with animations, sound effects, and a scoreboard.  
 This project was developed as part of an internship assignment.
 
----
 
 ## 📌 Features
 
@@ -36,3 +35,4 @@ This project was developed as part of an internship assignment.
 ## 🚀 How to Run
 1. Download or clone the project folder.
 2. Ensure the following structure:
+
