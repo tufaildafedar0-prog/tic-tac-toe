@@ -35,10 +35,11 @@ body
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.18s ease;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+/* Hover */
 .cell:hover 
 {
   background: #f1f1f1;
@@ -48,9 +49,9 @@ body
 /* Status text */
 #status 
 {
-  font-size: 1.3em;
+  font-size: 1.1rem;
   font-weight: bold;
-  margin-top: 20px;
+  margin-top: 12px;
   color: #fff;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
@@ -59,7 +60,7 @@ body
 .cell span 
 {
   display: inline-block;
-  animation: pop 0.3s ease;
+  animation: pop 0.22s ease;
 }
 
 @keyframes pop 
@@ -68,22 +69,17 @@ body
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* Glow effect for winner */
+/* Winner */
 .winner 
 {
   animation: glow 1s infinite alternate;
+  background: #ffb3ad !important;
 }
 
-@keyframes glow 
-{
-  from { background: #ffffff; }
-  to { background: #ff3b2e; }
-}
-
-/* Shake for invalid click */
+/* Shake */
 .shake 
 {
-  animation: shake 0.2s;
+  animation: shake 0.22s;
 }
 
 @keyframes shake 
@@ -93,3 +89,15 @@ body
   75% { transform: translateX(6px); }
 }
 
+/* Mode buttons top */
+.mode-buttons .btn {
+  min-width: 170px;
+}
+
+/* Hide container initially */
+.hidden { display: none; }
+
+/* small responsive tweaks */
+@media (max-width: 480px) {
+  .mode-buttons .btn { font-size: 14px; padding: .5rem .75rem; }
+}
