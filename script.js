@@ -6,6 +6,7 @@ const btnPVP = document.getElementById("btnPVP");
 const btnPVAI = document.getElementById("btnPVAI");
 const btnBack = document.getElementById("btnBack");
 
+// -------Get AI DOM Elements ----------------
 const aiEasyBtn = document.getElementById("aiEasy");
 const aiMediumBtn = document.getElementById("aiMedium");
 const aiHardBtn = document.getElementById("aiHard");
@@ -21,7 +22,6 @@ const soundWrong = new Audio("sound/Wrong.wav");
 const scoreXEl = document.getElementById("scoreX");
 const scoreOEl = document.getElementById("scoreO");
 const scoreDrawEl = document.getElementById("scoreDraw");
-
 // Game container
 const gameContainer = document.getElementById("gameContainer");
 
