@@ -126,3 +126,4 @@ function restartGame()
     cell.classList.remove("winner");
   });
 }
+
