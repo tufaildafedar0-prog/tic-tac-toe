@@ -125,7 +125,7 @@ function onCellClick() {
       else if (difficulty === "medium") aiPlayMedium();
       else if (difficulty === "hard") aiPlayHard();
       aiThinking = false;
-    }, 450);
+    }, 850);
   }
 }
 
