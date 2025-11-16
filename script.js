@@ -95,12 +95,19 @@ function showGame() {
   gameContainer.classList.remove('hidden');
 }
 
+// Sound latency fix 
+function playSound(audio) {
+    audio.currentTime = 0;  
+    audio.play();
+}
+
+
 // ------------------- Cell click handler -------------------
 function onCellClick() {
   if (!running || aiThinking) {
     // block clicks if AI is thinking or game not started
     this.classList.add("shake");
-    soundWrong.play();
+    playSound(soundWrong);
     setTimeout(() => this.classList.remove("shake"), 250);
     return;
   }
@@ -108,7 +115,7 @@ function onCellClick() {
   const index = Number(this.dataset.index);
   if (board[index] !== "") {
     this.classList.add("shake");
-    soundWrong.play();
+    playSound(soundWrong);
     setTimeout(() => this.classList.remove("shake"), 250);
     return;
   }
@@ -133,7 +140,7 @@ function onCellClick() {
 function makeMove(index, player) {
   board[index] = player;
   cells[index].innerHTML = `<span>${player}</span>`;
-  player === "X" ? soundX.play() : soundO.play();
+  player === "X" ? playSound(soundX) : playSound(soundO);
   checkWinner();
 }
 
@@ -153,7 +160,7 @@ function checkWinner() {
   if (winnerFound) {
     setStatus(`Player ${currentPlayer} Wins! 🎉`);
     running = false;
-    soundWin.play();
+    playSound(soundWin);
     winningCombo.forEach(i => cells[i].classList.add("winner"));
 
     if (currentPlayer === "X") {
@@ -167,7 +174,7 @@ function checkWinner() {
   if (!board.includes("")) {
     setStatus("It's a Draw! 🤝");
     running = false;
-    soundDraw.play();
+    playSound(soundDraw);
     scoreDraw++; scoreDrawEl.textContent = scoreDraw;
     return;
   }
