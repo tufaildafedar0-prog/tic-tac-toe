@@ -1,103 +1,433 @@
-body 
-{
+body {
   font-family: "Segoe UI", Tahoma, sans-serif;
-  background: linear-gradient(135deg, #89f7fe, #66a6ff);
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
+  overflow: hidden;
+  position: relative;
 }
 
-/* Game grid */
-#game 
-{
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animated floating particles */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  animation: float 6s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-20px) scale(1.02); }
+}
+
+/* Game container with neon glow */
+#game {
   display: grid;
   grid-template-columns: repeat(3, minmax(80px, 15vmin));
   grid-template-rows: repeat(3, minmax(80px, 15vmin));
-  gap: 8px;
+  gap: 12px;
   justify-content: center;
   margin: 0 auto;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 
+    0 0 50px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Each cell */
-.cell 
-{
-  background: white;
-  border: 2px solid #333;
-  border-radius: 12px;
-  font-size: 5vmin;
+/* Neon border animation */
+#game::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #ff6a60, #66a6ff, #23d5ab, #e73c7e);
+  background-size: 400% 400%;
+  border-radius: 26px;
+  z-index: -1;
+  animation: neonBorder 3s ease infinite;
+  filter: blur(8px);
+  opacity: 0.7;
+}
+
+@keyframes neonBorder {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Cells with glass morphism */
+.cell {
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  font-size: 6vmin;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.18s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Hover */
-.cell:hover 
-{
-  background: #f1f1f1;
-  transform: scale(1.05);
+.cell:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
-/* Status text */
-#status 
-{
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-top: 12px;
-  color: #fff;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+/* X and O with gradient text */
+.cell.x span {
+  background: linear-gradient(45deg, #ff6a60, #ff3366);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(255, 106, 96, 0.5);
 }
 
-/* Pop animation for X/O */
-.cell span 
-{
+.cell.o span {
+  background: linear-gradient(45deg, #66a6ff, #23d5ab);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(102, 166, 255, 0.5);
+}
+
+/* Status with neon glow */
+#status {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 25px;
+  color: white;
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 20px rgba(255, 255, 255, 0.6),
+    0 0 30px rgba(255, 255, 255, 0.4);
+  padding: 15px 30px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+    transform: scale(1.02);
+  }
+}
+
+/* Enhanced pop animation */
+.cell span {
   display: inline-block;
-  animation: pop 0.22s ease;
+  animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-@keyframes pop 
-{
-  0% { transform: scale(0); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+@keyframes pop {
+  0% { 
+    transform: scale(0) rotate(-180deg); 
+    opacity: 0; 
+  }
+  70% { 
+    transform: scale(1.2) rotate(10deg); 
+  }
+  100% { 
+    transform: scale(1) rotate(0deg); 
+    opacity: 1; 
+  }
 }
 
-/* Winner */
-.winner 
-{
-  animation: glow 1s infinite alternate;
-  background: #ffb3ad !important;
+/* Winner cells with rainbow animation */
+.winner {
+  background: linear-gradient(45deg, #ff6a60, #ff3366, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: rainbow 2s ease infinite, winnerPulse 1s ease-in-out infinite;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 
+    0 0 40px rgba(255, 255, 255, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
 }
 
-/* Shake */
-.shake 
-{
-  animation: shake 0.22s;
+@keyframes rainbow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
-@keyframes shake 
-{
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  75% { transform: translateX(6px); }
+@keyframes winnerPulse {
+  0%, 100% { transform: scale(1.05); }
+  50% { transform: scale(1.1); }
 }
 
-/* Mode buttons top */
+/* Mode buttons with glass effect */
 .mode-buttons .btn {
-  min-width: 170px;
+  min-width: 180px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 15px;
+  padding: 14px 28px;
+  color: white;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 20px rgba(255, 255, 255, 0.1);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Hide container initially */
-.hidden { display: none; }
+.mode-buttons .btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.2),
+    0 0 30px rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
+}
 
-/* small responsive tweaks */
+.mode-buttons .btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.mode-buttons .btn:hover::before {
+  left: 100%;
+}
+
+/* Floating stars background */
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Responsive design */
 @media (max-width: 480px) {
-  .mode-buttons .btn { font-size: 14px; padding: .5rem .75rem; }
+  .mode-buttons .btn { 
+    font-size: 14px; 
+    padding: 12px 20px; 
+    min-width: 150px;
+  }
+  
+  #game {
+    padding: 20px;
+    gap: 10px;
+  }
+  
+  #status {
+    font-size: 1.2rem;
+    padding: 12px 24px;
+  }
+}
+
+.hidden { 
+  display: none; 
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+}
+
+/* Enhanced shake animation */
+.shake {
+  animation: enhancedShake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes enhancedShake {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  25% { transform: translateX(-6px) rotate(-2deg); }
+  75% { transform: translateX(6px) rotate(2deg); }
+}
+
+
+/* AI Difficulty Modal Styling */
+#aiModal .modal-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+#aiModal .modal-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 20px 20px 0 0;
+}
+
+#aiModal .modal-title {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+#aiModal .btn-close {
+  filter: invert(1);
+}
+
+#aiModal .modal-body {
+  background: transparent;
+}
+
+#aiModal .btn {
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#aiModal .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+#aiModal #aiEasy {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+}
+
+#aiModal #aiMedium {
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+  color: white;
+}
+
+#aiModal #aiHard {
+  background: linear-gradient(135deg, #dc3545, #e83e8c);
+  color: white;
+}
+
+#aiModal .text-muted {
+  text-align: center;
+  font-style: italic;
+} 
+
+
+/* ADAPTIVE PERFORMANCE BOOSTER
+*/
+
+/* Reduce animations on weak devices */
+@media (prefers-reduced-motion: reduce) {
+
+  body, 
+  #game,
+  .cell,
+  #status {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Neon border slower = less GPU */
+  #game::after {
+    animation: neonBorder 8s ease infinite !important;
+  }
+
+  /* Winner animation lighter */
+  .winner {
+    animation: rainbow 6s ease infinite, winnerPulse 2s ease-in-out infinite !important;
+  }
+}
+
+/* Light mode for very small, low-end mobile screens */
+@media (max-width: 360px) {
+  
+  /* Slightly reduce blur (big performance gain) */
+  #game,
+  .cell {
+    backdrop-filter: blur(6px) !important;
+  }
+
+  /* Reduce shadow complexity */
+  .cell {
+    box-shadow: 
+      0 5px 15px rgba(0,0,0,0.15) !important;
+  }
+
+  /* Slightly smaller grid – smoother animations */
+  #game {
+    gap: 8px !important;
+    padding: 15px !important;
+  }
+}
+
+/* If device has very weak GPU */
+@media (update: slow) {
+  /* Reduce heavy glow */
+  #game {
+    box-shadow: none !important;
+  }
+  
+  #game::after {
+    opacity: 0.4 !important;
+    filter: blur(4px) !important;
+  }
+
+  /* Lighter hover animation */
+  .cell:hover {
+    transform: scale(1.03) !important;
+  }
 }
