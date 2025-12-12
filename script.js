@@ -296,7 +296,8 @@ function minimax(bd, depth, isMaximizing) {
       maxEval = Math.max(maxEval, evalScore);
     }
     return maxEval;
-  } else {
+  } 
+  else {
     let minEval = Infinity;
     for (const idx of getEmptyIndexes(bd)) {
       const copy = bd.slice();
